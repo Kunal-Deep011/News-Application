@@ -5,11 +5,11 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
  /* const API_KEY = '9602a2f2011c4c608e18f3f59a6557b5';*/
  const API_KEY = '3ce542c9a605408d8a6cf2952c4336c8';
  /*const API_KEY = 'af5b2c0b030e4ece8c5aa3bb00ec4019';*/
- const PAGE_SIZE = 10;
+ /*const PAGE_SIZE = 10;*/
   
 
 
-export const fetchNews = createAsyncThunk('news/fetchNews', async ({ keyword, page = 1 }) => {
+export const fetchNews = createAsyncThunk('news/fetchNews', async ({ keyword}) => {
  /* const params = {
     q: keyword,
     page: page,
@@ -24,7 +24,7 @@ export const fetchNews = createAsyncThunk('news/fetchNews', async ({ keyword, pa
     totalResults: response.data.totalResults,
   };*/
 
-  const response = await fetch(`https://newsapi.org/v2/everything?q=${keyword}&pageSize=${PAGE_SIZE}&page=${page}&apiKey=${API_KEY}`);
+  const response = await fetch(`https://newsapi.org/v2/everything?q=${keyword}&apiKey=${API_KEY}`);
   if(!response.ok){
     throw new Error('Network response was not ok');
   }
@@ -42,13 +42,13 @@ const newsSlice = createSlice({
     status: 'idle',
     error: null,
     totalResults: 0,
-    currentPage: 1,
+   /* currentPage: 1,*/
   },
-  reducers: {
+  /*reducers: {
     setPage: (state, action) => {
       state.currentPage = action.payload;
     },
-  },
+  },*/
   extraReducers: (builder) => {
     builder
       .addCase(fetchNews.pending, (state) => {
