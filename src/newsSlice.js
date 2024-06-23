@@ -3,8 +3,10 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
  /* const API_KEY = '9602a2f2011c4c608e18f3f59a6557b5';*/
- /*const API_KEY = '3ce542c9a605408d8a6cf2952c4336c8';*/
-  const API_KEY = 'af5b2c0b030e4ece8c5aa3bb00ec4019';
+ const API_KEY = '3ce542c9a605408d8a6cf2952c4336c8';
+ /*const API_KEY = 'af5b2c0b030e4ece8c5aa3bb00ec4019';*/
+  
+
 
 export const fetchNews = createAsyncThunk('news/fetchNews', async ({ keyword, page = 1 }) => {
   const params = {
