@@ -1,30 +1,30 @@
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+/*import axios from 'axios';*/
 
  /* const API_KEY = '9602a2f2011c4c608e18f3f59a6557b5';*/
  const API_KEY = '3ce542c9a605408d8a6cf2952c4336c8';
  /*const API_KEY = 'af5b2c0b030e4ece8c5aa3bb00ec4019';*/
- /*const PAGE_SIZE = 10;*/
+ const PAGE_SIZE = 10;
   
 
 
 export const fetchNews = createAsyncThunk('news/fetchNews', async ({ keyword, page = 1 }) => {
-  const params = {
+ /* const params = {
     q: keyword,
     page: page,
     pageSize: 10, // number of articles per page
     apiKey: API_KEY
-  };
+  };*/
 
-  const response = await axios.get(`https://newsapi.org/v2/everything?`, {params});
+  /*const response = await axios.get(`https://newsapi.org/v2/everything?`, {params});
   console.log("data", response.data.articles);
   return {
     articles: response.data.articles,
     totalResults: response.data.totalResults,
-  };
+  };*/
 
-  /*const response = await fetch(`https://newsapi.org/v2/everything?q=${keyword}&pageSize=${PAGE_SIZE}&page=${page}&apiKey=${API_KEY}`);
+  const response = await fetch(`https://newsapi.org/v2/everything?q=${keyword}&pageSize=${PAGE_SIZE}&page=${page}&apiKey=${API_KEY}`);
   if(!response.ok){
     throw new Error('Network response was not ok');
   }
@@ -32,7 +32,7 @@ export const fetchNews = createAsyncThunk('news/fetchNews', async ({ keyword, pa
     return {
       articles: data.articles,
       totalResults: data.totalResults,
-    };*/
+    };
 });
 
 const newsSlice = createSlice({
