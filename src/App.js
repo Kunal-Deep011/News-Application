@@ -18,6 +18,7 @@ function App() {
 
   const [searchTerm, setSearchTerm] = useState('latest');
   const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const [duplicateMessage, setDuplicateMessage] = useState(null);
  
   useEffect(() => {
       dispatch(fetchNews({ example: searchTerm}));   
@@ -28,11 +29,18 @@ function App() {
   }, [isDarkTheme]);
   
   const handleAddFavorite = (article) => {
+    const isAlreadyFavorite = favorites.some(fav => fav.url === article.url);
+    if(isAlreadyFavorite){
+      setDuplicateMessage(article.url);
+      setTimeout(() => setDuplicateMessage(null), 2000); // Clear message after 3 seconds
+      return;
+    }
     dispatch(addFavorite(article));
   };
 
   const handleRemoveFavorite = (article) => {
     dispatch(removeFavorite(article));
+    setDuplicateMessage(null);
   };
 
  const handlePageChange = (page) => {
@@ -99,7 +107,15 @@ const paginatedArticles = news.slice((currentPage - 1) * 3, currentPage * 3);
                           <img src={article.image} alt="..."/>
                         }
                     </div>
-                    <div className='c2b2-button'><button className="btn btn-primary" onClick={() => handleAddFavorite(article)}>Add to Favorites ★</button></div>
+                    <div className='c2b2-button article-actions'>
+
+                      <button className={favorites.some(fav => fav.url === article.url) ? 'btn favorited' : 'btn btn-primary'} onClick={() => handleAddFavorite(article)}>Add to Favorites ★</button>
+
+                      {duplicateMessage === article.url && (
+                        <span className="duplicate-message">This article is already in your favorites.</span>
+                      )}
+
+                    </div>
                   </div>
                 </div>
               ))}

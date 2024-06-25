@@ -315,6 +315,24 @@ aside h2{
 .dark-theme .searchInput::placeholder{
   color: rgba(127,255,212, 0.5);
 }
+
+/* ... other styles ... */
+.article-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.duplicate-message {
+  color: red;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.c2b2-button button.favorited {
+  color: black;
+  background-color: yellow; 
+}
 /* Toggle Switch */
 .theme-switch {
   position: relative;
