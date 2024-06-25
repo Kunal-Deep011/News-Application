@@ -1,70 +1,32 @@
-# Getting Started with Create React App
+# React News App Portal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Overview : 
+This News App is a React-based application that fetches and displays news articles using the GNews API. It allows users to search for articles, paginate through results, and save favorite articles. The app supports dark and light themes, and favorites are persisted using local storage. It handles loading and error states gracefully and is responsive, ensuring a good user experience on various devices.
 
-## Available Scripts
+# Component and Functionality Descriptions :
+`App.js`
+    1) Purpose: Main component managing state, fetching news, handling search, pagination, theme toggling, and managing favorites.
+    2)Functionality:
+       State Management: Uses React hooks and Redux for managing news articles, current page, search term, and theme.
+       API Calls: Dispatches actions to fetch news articles from GNews API.
+       Pagination: Manages pagination logic to display a subset of articles.
+       Favorites Management: Adds/removes articles from favorites, persists favorites using local storage.
+       Theme Toggling: Toggles between dark and light themes, applying appropriate classes to the body.
+       Duplicate Message: Displays a temporary message when an article is already in the favorites list.
+       
+`newsSlice.js`
+    1) Purpose: Redux slice for managing news-related state.
+    2) Functionality:
+          State: Manages the articles, loading status, error messages, current page, and total pages.
+          Async Thunk: Defines asynchronous thunk action for fetching news articles from the API.
+          Reducers: Handles state updates for fetched news, pagination, loading, and errors.
+`favoritesSlice.js`
+      1) Purpose: Redux slice for managing favorites state.
+      2)Functionality:
+           State: Manages the list of favorite articles.
+           Reducers: Handles actions to add and remove articles from the favorites list.
+           Local Storage: Loads and saves favorites to local storage for persistence.
+`Loading.js`
+       1) Purpose: Functional component displaying a loading animation.
+       2) Functionality: Shows a centered loading spinner during API calls
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
