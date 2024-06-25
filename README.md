@@ -65,7 +65,7 @@ This News App is a React-based application that fetches and displays news articl
 ![Laptop View](https://github.com/Kunal-Deep011/News-Application/assets/117732649/f00e9719-8b11-43cb-adc2-9a9cddbf6e0f)
 
     Tablet View :
-![Tab View](https://github.com/Kunal-Deep011/News-Application/assets/117732649/373a6c4c-7a60-406e-95de-ec7a496388df)
+![Tablet View](https://github.com/Kunal-Deep011/News-Application/assets/117732649/860a70c0-3b8c-4695-954a-f85a8e17874e)
 
     Mobile View :
 ![Mobile View](https://github.com/Kunal-Deep011/News-Application/assets/117732649/cae39ff0-1d25-4e00-b472-aaad6176bd3a)
