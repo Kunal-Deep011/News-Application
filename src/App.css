@@ -9,6 +9,7 @@
   padding: 20px;
 }
 
+/* ---Header styling--- */
 header {
   grid-area: header;
   display: flex;
@@ -38,7 +39,6 @@ header .inputBox{
   align-items: center;
   gap: 10px;
 }
-
 .headerBox .hb2{
   color: #0D6EFD;
   background-color: #fff;
@@ -59,25 +59,29 @@ header .inputBox{
   color: #fff;
   border-radius: 50%;
 }
+
+/* ---'main' and 'aside' styling--- */
 main {
   grid-area: main;
   margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-
 aside {
   grid-area: aside;
-  margin-top: 70px;
   box-shadow: 0 0 10px #ccc;
   height: 600px;
   position: fixed;
   right: 30px;
   width: 480px;
-  top:38px;
+  top:110px;
   border-radius: 10px;
   overflow: scroll;
 }
 .favorites-list{
-  padding: 5px;
+  padding: 15px;
   margin-top: 50px;
 }
 aside h2{
@@ -89,8 +93,12 @@ aside h2{
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
+.datePara{
+  font-weight: bold;
+}
 .favorite-item h3{
  font-size: 1.3rem;
+ color: red;
 }
 .favorite-item button{
   width: 40px;
@@ -104,27 +112,23 @@ aside h2{
 }
 .favorite-item{
   padding: 5px;
-  background-color: aquamarine;
-  
+  background-color: aquamarine; 
 }
-
 .news-list, .favorites-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-
 .news-item, .favorite-item {
   border-radius: 10px;
   width: 100%;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0 2px #ccc;
+ box-shadow: 0 0 2px #ccc;
 }
-
 .news-item:hover{
   transform: scale(0.975);
-  transition: linear;
+  transition: linear 0.3s;
 }
 .nw1{
  width: 100%;
@@ -138,7 +142,6 @@ aside h2{
  border-top-left-radius: 10px;
  border-top-right-radius: 10px;
 }
-
 .nw2{
   width: 100%;
   height: 250px;
@@ -169,6 +172,8 @@ aside h2{
   bottom: 10px;
   left: 5px;
 }
+
+/* ---Pagination Styling--- */
 .pagination-controls {
   display: flex;
   justify-content: center;
@@ -176,7 +181,25 @@ aside h2{
   gap: 10px;
   margin-top: 20px;
 }
+.pagination button {
+  width:40px;
+  height: 40px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  border: none;
+  border-radius: 50%;
+}
+.pagination button:hover{
+  transform: scale(1.1);
+  transition: ease-in-out;
+}
+.pagination .active {
+  background-color: #007bff;
+  color: #fff;
+}
 
+ /*---Responsive styling---*/
 @media (max-width: 1500px) {
   .App {
     grid-template-areas:
@@ -209,9 +232,13 @@ aside h2{
       'aside';
     grid-template-columns: 1fr;
   }
-  
   aside{
     margin-top: 10px;
+  }
+  aside h2{
+    position: sticky;
+    top: 0;
+    z-index: 1;
   }
 }
 @media (max-width: 700px) {
@@ -234,8 +261,6 @@ aside h2{
     border-bottom-right-radius: 0;
   }
   .c2b2-button{
-    /*bottom: 268px;
-    left: 470px;*/
     position: relative;
   }
   aside{
@@ -244,3 +269,86 @@ aside h2{
   
 }
 
+/* Light theme styles */
+.light-theme .pagination button{
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+.light-theme .pagination .active {
+  background-color: #007bff;
+  color: #fff;
+}
+/* Dark theme styles */
+.dark-theme{
+  background-color: #2c2c2c;
+}
+.dark-theme aside{
+  background-color: #000;
+  box-shadow: none;
+  border-bottom: 1px solid #000;
+}
+.dark-theme .searchInput, .dark-theme .dropdown, .dark-theme .favorite-item{
+   background-color: #2c2c2c;
+   color: aquamarine;
+}
+.dark-theme .favorite-item h3{
+  color: red;
+}
+.dark-theme .nw2,.dark-theme .pagination button{
+  background-color: #000;
+  color: aquamarine;
+}
+.dark-theme header{
+ background-color: #000;
+}
+.dark-theme .news-item, .dark-theme .favorite-item{
+  box-shadow: none;
+}
+.dark-theme .errorMessage, .light-theme .errorMessage{
+  color: red;
+  font-weight: bold;
+}
+.dark-theme .pagination .active {
+  background-color: #007bff;
+  color: #fff;
+}
+.dark-theme .searchInput::placeholder{
+  color: rgba(127,255,212, 0.5);
+}
+/* Toggle Switch */
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 20px;
+}
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: #2196F3;
+}

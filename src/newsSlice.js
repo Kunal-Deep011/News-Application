@@ -2,27 +2,22 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
- /* const API_KEY = '9602a2f2011c4c608e18f3f59a6557b5';*/
- const API_KEY = '3ce542c9a605408d8a6cf2952c4336c8';
- /*const API_KEY = 'af5b2c0b030e4ece8c5aa3bb00ec4019';*/
-  
+ /*const API_KEY = '8b513623293d75db8f4106a575ce69ec'; //GNEWS.IO TOKEN KEY*/
+ const API_KEY = 'f774be93784035acc13cc1c2a13d46b5'; //GNEWS.IO TOKEN KEY
 
-
-export const fetchNews = createAsyncThunk('news/fetchNews', async ({ keyword, page = 1}) => {
+export const fetchNews = createAsyncThunk('news/fetchNews', async ({ example, page}) => {
   const params = {
-    q: keyword,
+    q: example,
     page: page,
-    pageSize: 10, // number of articles per page
-    apiKey: API_KEY
+    apikey: API_KEY,
+    lang: 'en'
   };
 
-  const response = await axios.get(`https://newsapi.org/v2/everything?`, {params});
+  const response = await axios.get(`https://gnews.io/api/v4/search?country=in`, {params});
   console.log("data", response.data.articles);
   return {
-    articles: response.data.articles,
-    totalResults: response.data.totalResults,
+    articles: response.data.articles
   };
-
 });
 
 const newsSlice = createSlice({
@@ -31,11 +26,11 @@ const newsSlice = createSlice({
     articles: [],
     status: 'idle',
     error: null,
-    totalResults: 0,
-    currentPage: 1
+    totalPages: 4,
+    currentPage: 1,
   },
   reducers: {
-    setPage: (state, action) => {
+    setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
     },
   },
@@ -47,7 +42,6 @@ const newsSlice = createSlice({
       .addCase(fetchNews.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.articles = action.payload.articles;
-        state.totalResults = action.payload.totalResults;
       })
       .addCase(fetchNews.rejected, (state, action) => {
         state.status = 'failed';
@@ -56,6 +50,6 @@ const newsSlice = createSlice({
   },
 });
 
-export const { setPage } = newsSlice.actions;
+export const { setCurrentPage } = newsSlice.actions;
 
 export default newsSlice.reducer;

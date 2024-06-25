@@ -1,31 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchNews, setPage } from './newsSlice';
+import { fetchNews, setCurrentPage } from './newsSlice';
 import { addFavorite, removeFavorite } from './favoritesSlice';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import noImage from './assets/no-image.jpg';
+import Loading from './components/Loading';
 
 function App() {
   const dispatch = useDispatch();
   const news = useSelector((state) => state.news.articles);
   const newsStatus = useSelector((state) => state.news.status);
   const newsError = useSelector((state) => state.news.error);
-  const totalResults = useSelector((state) => state.news.totalResults);
+  const totalPages = useSelector((state) => state.news.totalPages);
   const currentPage = useSelector((state) => state.news.currentPage);
   const favorites = useSelector((state) => state.favorites);
 
   const [searchTerm, setSearchTerm] = useState('latest');
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
  
   useEffect(() => {
-      dispatch(fetchNews({ keyword: searchTerm, page: currentPage }));   
-  }, [dispatch, searchTerm, currentPage]);
+      dispatch(fetchNews({ example: searchTerm}));   
+  }, [dispatch, searchTerm]);
 
-  const handleSearch = () => {
-    dispatch(setPage(1));  // Reset to first page on new search
-    dispatch(fetchNews({ keyword: searchTerm, page: 1 }));
-  };
-
+  useEffect(() => {
+    document.body.className = isDarkTheme ? 'dark-theme' : 'light-theme';
+  }, [isDarkTheme]);
+  
   const handleAddFavorite = (article) => {
     dispatch(addFavorite(article));
   };
@@ -34,17 +35,15 @@ function App() {
     dispatch(removeFavorite(article));
   };
 
-  const handleNextPage = () => {
-    dispatch(setPage(currentPage + 1));
-  };
+ const handlePageChange = (page) => {
+  dispatch(setCurrentPage(page));
+};
 
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      dispatch(setPage(currentPage - 1));
-    }
-  };
+const toggleTheme = () => {
+  setIsDarkTheme((prevTheme) => !prevTheme);
+};
 
-  const totalPages = Math.ceil(totalResults / 10);  // Assuming pageSize is 10
+const paginatedArticles = news.slice((currentPage - 1) * 3, currentPage * 3);
 
   return (
     <div className="App">
@@ -54,13 +53,17 @@ function App() {
             <div className='hb2'><h1>App</h1></div>
         </div>
         <div className='inputBox'>
+          <label className="theme-switch">
+            <input type="checkbox" onChange={toggleTheme} />
+            <span className="slider round"></span>
+          </label>
           <input
+          className='searchInput'
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search news..."
+            placeholder="Search news...             ⌕"
           />
-          <button onClick={handleSearch}>⌕</button>
           <select className='dropdown' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}>
             <option value="">Select Category</option>
             <option value="technology">Technology</option>
@@ -71,44 +74,58 @@ function App() {
         </div>
       </header>
       <main>
-        {newsStatus === 'loading' && <p>Loading...</p>}
-        {newsStatus === 'failed' && <p>Error: {newsError}</p>}
-
+        {newsStatus === 'loading' && <Loading/>}
+        {newsStatus === 'failed' && <p className='errorMessage'>Error: {newsError}</p>}
+        {newsStatus === 'succeeded' && (
          <div className='news-list'>
          
-             {news.filter((article) => !article.title.toLowerCase().includes('[removed]')).map((article) => (
+             {paginatedArticles.map((article) => (
                 <div key={article.url} className="news-item">
                   <div className='nw1'>
                     <div>{article.title}</div>
                   </div>
                   <div className='nw2'>
                     <div className='c2b1'>
-                       <p>{article.description && article.description.length > 200 ?
+                       <p className='desc'>{article.description && article.description.length > 200 ?
                        article.description.slice(0,200).trim()+ '...' : article.description}</p>
-                       <p>Published At : {article.publishedAt}</p>
+                       <p className='datePara'>Published At : {article.publishedAt}</p>
                        <a href={article.url}>Detailed View</a>
-                       
                     </div>
                     <div className='c2b2'>
                        {
-                          article.urlToImage === null ? 
+                          article.image === null ? 
                           <img src={noImage} alt="..."/>
                           : 
-                          <img src={article.urlToImage} alt="..."/>
+                          <img src={article.image} alt="..."/>
                         }
                     </div>
                     <div className='c2b2-button'><button className="btn btn-primary" onClick={() => handleAddFavorite(article)}>Add to Favorites ★</button></div>
                   </div>
                 </div>
               ))}
-         </div>
+         </div> 
+         )}
 
-        <div className="pagination-controls">
-          <button className="btn btn-primary" onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-          <span>Page {currentPage} of {totalPages}</span>
-          <button className="btn btn-primary" onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
-        </div>
+        {
+             (newsStatus === 'failed' && <p className='errorMessage'>Error: {newsError}</p>) ?
+              <div></div>
+             :
+             (
+                  <div className="pagination pagination-controls">
+                  {Array.from({ length: totalPages }, (_, index) => (
+                    <button
+                      key={index + 1}
+                      onClick={() => handlePageChange(index + 1)}
+                      className={currentPage === index + 1 ? 'active' : ''}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+                </div>
+             ) 
+        }
       </main>
+
       <aside>
             <h2>Favorites ★</h2>
             <div className="favorites-list">
@@ -117,13 +134,13 @@ function App() {
                   <h3>{article.title}</h3>
                   <p>{article.description && article.description.length > 100 ?
                            article.description.slice(0,100).trim()+ '...' : article.description}</p>
-                           <p>Published At : {article.publishedAt}</p>
+                           <p className='datePara'>Published At : {article.publishedAt}</p>
                   <p className='f2p'><a href={article.url}>Detailed View</a> <button className="btn btn-danger" onClick={() => handleRemoveFavorite(article)}>X</button></p>
                   
                 </div>
               ))}
             </div>
-      </aside>
+       </aside>
     </div>
   );
 }
