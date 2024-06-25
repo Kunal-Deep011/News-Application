@@ -47,7 +47,7 @@ This News App is a React-based application that fetches and displays news articl
          Responsive Design: Uses CSS Grid and Flexbox for responsive layouts.
          Component Styles: Styles for buttons, pagination, messages, and the overall layout.
 
-#Features :
+# Features :
 
     Responsive Design: Adjusts layout based on screen size using CSS Grid and Flexbox.
     Error Handling: Displays error messages if API calls fail.
