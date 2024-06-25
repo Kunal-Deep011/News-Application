@@ -6,6 +6,7 @@ This News App is a React-based application that fetches and displays news articl
 # Component and Functionality Descriptions :
 
 `App.js`
+
     1) Purpose: Main component managing state, fetching news, handling search, pagination, theme toggling, and managing favorites.
     2)Functionality:
        State Management: Uses React hooks and Redux for managing news articles, current page, search term, and theme.
