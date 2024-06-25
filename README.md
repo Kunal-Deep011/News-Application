@@ -59,14 +59,15 @@ This News App is a React-based application that fetches and displays news articl
     
 * --This project demonstrates the use of React, Redux, and modern JavaScript features to create a responsive and user-friendly news application.-- *
 
+# Screenshots :
 
+![Laptop View](https://github.com/Kunal-Deep011/News-Application/assets/117732649/17601a47-bc84-4dd3-8ec2-32794cf646fe)
 
-
-
-
-
-
+![Tab View](https://github.com/Kunal-Deep011/News-Application/assets/117732649/373a6c4c-7a60-406e-95de-ec7a496388df)
       
-
+![Mobile View](https://github.com/Kunal-Deep011/News-Application/assets/117732649/cae39ff0-1d25-4e00-b472-aaad6176bd3a)
        
+![Dark Mode View](https://github.com/Kunal-Deep011/News-Application/assets/117732649/bf82a168-ce45-4dc3-9191-f10c405b0f6e)
+
+![Light mode View](https://github.com/Kunal-Deep011/News-Application/assets/117732649/d35c7098-0cfc-420a-8a7e-b456db45287a)
 
